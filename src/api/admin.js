@@ -8,7 +8,7 @@ export function login(data) {
   })
 }
 
-export function getUserInfo() {
+export function getAdminInfo() {
   return request({
     url: '/admin/info',
     method: 'get'
@@ -16,22 +16,15 @@ export function getUserInfo() {
 }
 
 
-export function getInvestInfo() {
-  return request({
-    url: '/admin/getInvestInfo',
-    method: 'get'
-  })
-}
-
 export function getInfoById(id) {
   return request({
-    url: '/user/' + id,
+    url: '/admin/' + id,
     method: 'get'
   })
 }
 export function getList(params) {
   return request({
-    url: '/user/list',
+    url: '/admin/list',
     method: 'get',
     params
   })
@@ -39,7 +32,7 @@ export function getList(params) {
 
 export function add(data) {
   return request({
-    url: '/user/',
+    url: '/admin/',
     method: 'post',
     data
   })
@@ -47,16 +40,15 @@ export function add(data) {
 
 export function update(data) {
   return request({
-    url: '/user/',
+    url: '/admin/',
     method: 'put',
     data
   })
 }
 
 export function del(id) {
-  const url = '/user/' + id
   return request({
-    url: url,
+    url: '/admin/' + id,
     method: 'delete'
   })
 }

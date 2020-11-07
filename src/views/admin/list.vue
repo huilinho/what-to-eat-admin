@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="padding">
       <el-col :span="5">
-        <el-input v-model="pagination.keywords" placeholder="请输入用户名"></el-input>
+        <el-input v-model="pagination.keywords" placeholder="请输入管理员名称"></el-input>
       </el-col>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="1">
@@ -10,7 +10,7 @@
       </el-col>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="1">
-        <el-button type="success" @click="add">添加用户</el-button>
+        <el-button type="success" @click="add">添加管理员</el-button>
       </el-col>
     </el-row>
     <el-table
@@ -22,12 +22,17 @@
       highlight-current-row
     >
       <el-table-column align="center" label="ID" width="95" prop="id"/>
-      <el-table-column label="用户名" prop="username"/>
-      <el-table-column label="昵称" prop="nickname"/>
-      <el-table-column label="等级" prop="rank" :formatter="rankFormatter"/>
-      <el-table-column label="备注" prop="motto"/>
-      <el-table-column label="创建时间" prop="createTime" :formatter="timeFormatter"/>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column align="center" label="名称" width="95" prop="username"/>
+      <el-table-column align="center" label="昵称" prop="nickname"/>
+      <el-table-column align="center" label="手机" prop="mobile" />
+      <el-table-column align="center" label="头像"  width="120">
+        <template slot-scope="scope">
+          <img :src="scope.row.avatar" min-width="70" height="70" style="padding:5px">
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="密码" prop="password"/>
+      <el-table-column align="center" label="创建时间" prop="createTime" :formatter="timeFormatter"/>
+      <el-table-column align="center" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button @click="edit(scope.$index)" type="text" size="small">编辑</el-button>
           <el-button @click="del(scope.$index)" type="text" size="small">删除</el-button>
@@ -52,7 +57,7 @@
 </template>
 
 <script>
-import { del, getList } from '@/api/user'
+import { del, getList } from '@/api/admin'
 import DateUtil from '../../utils/DateUtil'
 
 export default {
@@ -84,15 +89,6 @@ export default {
     this.loadList()
   },
   methods: {
-    rankFormatter(row){
-      console.log(row)
-      var rank = row.rank;
-      if (rank === 1){
-        return "管理员"
-      }else{
-        return "用户"
-      }
-    },
     loadList() {
       this.loading = true
       getList(this.pagination).then(res => {
@@ -105,12 +101,12 @@ export default {
         this.loading = false
       })
     },
-    add(){
-      this.$router.push({ path: '/user/add/'})
+    add() {
+      this.$router.push({ path: '/admin/add/'})
     },
     edit(index) {
       const data = this.list[index]
-      this.$router.push({ path: '/user/edit/' + data.id })
+      this.$router.push({ path: '/admin/edit/' + data.id })
     },
     del(index) {
       const data = this.list[index]

@@ -51,7 +51,6 @@
 </template>
 
 <script>
-  import { getUserInfo } from '@/api/user'
 export default {
   name: 'Login',
   data() {
