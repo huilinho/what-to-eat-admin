@@ -102,7 +102,7 @@ export default {
       })
     },
     add() {
-      this.$router.push({ path: '/admin/add/'})
+      this.$router.push({ path: '/admin/add/' })
     },
     edit(index) {
       const data = this.list[index]

@@ -31,9 +31,8 @@
       </el-row>
       <el-form-item label="图片" prop="avatar">
         <el-upload
-          action="admapi/upload"
+          action="http://localhost:8527/admapi/upload"
           list-type="picture-card"
-          :file-list="pictureAllList"
           :headers="headers"
           :on-preview="picturePreview"
           :on-remove="pictureRemove"
@@ -60,13 +59,13 @@ import { getToken } from '../../utils/auth'
 export default {
   data() {
     // 数据校验
-    const validateAccount = (rule, value, callback) => {
-      const regex = /^[A-Za-z0-9]{4,20}$/g
+    const validateMobile = (rule, value, callback) => {
+      const regex = /^\d{11}$/g
       if (value === '') {
-        callback(new Error('请输入账号'))
+        callback(new Error('请输入手机号'))
       } else {
         if (!regex.test(value)) {
-          callback(new Error('账号只能由字母、数字构成,最少4位最高20位！'))
+          callback(new Error('请输入11号手机号码！'))
         }
         callback()
       }
@@ -91,16 +90,15 @@ export default {
         password: '',
         avatar: ''
       },
-      pictureAllList: [],
       pictureVisible: false,
       dialogPicture: '',
       headers: { 'authToken': getToken() },
       // 数据校验：判空、正则匹配。
       formRules: {
-        mobile: [{ required: true, trigger: 'blur', message: '手机号不能为空' }],
-        username: [{ required: true, validator: validateAccount, trigger: 'blur', message: '昵称不能为空' }],
+        mobile: [{ required: true, trigger: 'blur', validator: validateMobile, message: '手机号不能为空' }],
+        username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
         nickname: [{ required: true, trigger: 'blur', message: '昵称不能为空' }],
-        password: [{ required: true,validator: validatePassword, trigger: 'blur' }]
+        password: [{ required: true, validator: validatePassword, trigger: 'blur' }]
       }
     }
   },
@@ -138,6 +136,7 @@ export default {
       this.$router.push({ path: '/admin/list' })
     },
     picturePreview(file) {
+      console.log(file.url)
       this.dialogPicture = file.url
       this.pictureVisible = true
     },
@@ -146,7 +145,9 @@ export default {
     },
     pictureSuccess(response) {
       const data = response.data
-      this.data.avatar.push(data.url)
+      this.data.avatar = data.url
+      console.log(123)
+      console.log(this.data.avatar)
     }
   }
 }
