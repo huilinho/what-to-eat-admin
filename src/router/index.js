@@ -6,6 +6,8 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import adminRouter from '@/router/modules/admin'
+import appraisalRouter from '@/router/modules/appraisal'
+import dishesRouter from '@/router/modules/dishes'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -57,6 +59,8 @@ export const constantRoutes = [
   },
 
   adminRouter,
+  appraisalRouter,
+  dishesRouter,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

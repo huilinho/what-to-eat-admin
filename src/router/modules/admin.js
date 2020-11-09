@@ -5,13 +5,13 @@ const adminRouter = {
   component: Layout,
   redirect: '/admin/list',
   name: '管理员',
-  meta: { title: '管理员模块', icon: 'form' },
+  meta: { title: '管理员模块', icon: 'user' },
   alwaysShow: true,
   children: [
     {
       path: 'list',
       component: () => import('@/views/admin/list'),
-      meta: { title: '管理员列表', icon: 'form' }
+      meta: { title: '管理员列表', icon: 'user' }
     },
     {
       path: 'add',
