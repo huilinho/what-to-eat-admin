@@ -10,6 +10,9 @@ import appraisalRouter from '@/router/modules/appraisal'
 import dishesRouter from '@/router/modules/dishes'
 import typeRouter from '@/router/modules/type'
 import firstCanteenRouter from "@/router/modules/firstCanteen";
+import secondCanteenRouter from "@/router/modules/secondCanteen";
+import thirdCanteenRouter from "@/router/modules/thirdCanteen";
+import fourthCanteenRouter from "@/router/modules/fourthCanteen";
 
 
 /**
@@ -63,6 +66,9 @@ export const constantRoutes = [
 
   adminRouter,
   firstCanteenRouter,
+  secondCanteenRouter,
+  thirdCanteenRouter,
+  fourthCanteenRouter,
   appraisalRouter,
   dishesRouter,
   typeRouter,
