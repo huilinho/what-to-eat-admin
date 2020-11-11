@@ -30,7 +30,7 @@
           <img :src="scope.row.cover" min-width="70" height="70" style="padding:5px">
         </template>
       </el-table-column>
-      <el-table-column align="center" label="获赞数" prop="like"  />
+      <el-table-column align="center" label="获赞数" prop="support"  />
       <el-table-column align="center" label="创建时间" prop="createTime" />
       <el-table-column align="center" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
@@ -56,8 +56,6 @@
 
 <script>
 import { del, getList } from '@/api/dishes'
-import DateUtil from '../../utils/DateUtil'
-
 export default {
   filters: {
     statusFilter(status) {

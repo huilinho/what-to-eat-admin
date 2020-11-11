@@ -9,6 +9,8 @@ import adminRouter from '@/router/modules/admin'
 import appraisalRouter from '@/router/modules/appraisal'
 import dishesRouter from '@/router/modules/dishes'
 import typeRouter from '@/router/modules/type'
+import firstCanteenRouter from "@/router/modules/firstCanteen";
+
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -60,6 +62,7 @@ export const constantRoutes = [
   },
 
   adminRouter,
+  firstCanteenRouter,
   appraisalRouter,
   dishesRouter,
   typeRouter,
