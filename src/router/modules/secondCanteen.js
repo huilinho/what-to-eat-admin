@@ -4,7 +4,7 @@ const secondCanteenRouter = {
   path: '/secondCanteen',
   component: Layout,
   redirect: 'noRedirect',
-  name: '饭堂',
+  name: '第二饭堂',
   meta: { title: '二饭', icon: 'canteen' },
   alwaysShow: true,
   children: [

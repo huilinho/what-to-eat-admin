@@ -4,7 +4,7 @@ const fourthCanteenRouter = {
   path: '/fourthCanteen',
   component: Layout,
   redirect: 'noRedirect',
-  name: '饭堂',
+  name: '第四饭堂',
   meta: { title: '四饭', icon: 'canteen' },
   alwaysShow: true,
   children: [

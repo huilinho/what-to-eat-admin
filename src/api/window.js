@@ -1,11 +1,19 @@
 import request from '@/utils/request'
 
-export function getInfoById(id) {
+export function getById(id) {
   return request({
     url: '/window/' + id,
     method: 'get'
   })
 }
+
+export function getNameList() {
+  return request({
+    url: '/window/pack',
+    method: 'get'
+  })
+}
+
 export function getList(params) {
   return request({
     url: '/window/list',
@@ -14,9 +22,9 @@ export function getList(params) {
   })
 }
 
-export function getWindowList(id) {
+export function getWindowList(data1, data2) {
   return request({
-    url: '/window/pack' + id,
+    url: '/window/' + data1 + '/' + data2,
     method: 'get'
   })
 }

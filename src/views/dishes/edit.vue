@@ -2,25 +2,26 @@
   <div class="app-container">
     <el-form ref="userForm" :model="data" :rules="formRules" label-width="120px">
       <el-row>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="菜式名称" prop="name">
             <el-input v-model="data.name" />
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row />
       <el-row>
-        <el-col :span="8">
-          <el-form-item label="窗口名" prop="windowId">
-            <el-input v-model="data.windowId" />
-          </el-form-item>
-        </el-col>
+        <el-form-item label="窗口" prop="windowId">
+          <el-select v-model="data.windowId" placeholder="请选择窗口">
+            <el-option v-for="(window, i) in windowList" :key="i" :label="window.name" :value="window.windowId" />
+          </el-select>
+        </el-form-item>
       </el-row>
       <el-row>
-        <el-col :span="8">
-          <el-form-item label="种类" prop="typeId">
-            <el-input v-model="data.typeId" />
-          </el-form-item>
-        </el-col>
+        <el-form-item label="种类" prop="typeId">
+          <el-select v-model="data.typeId" placeholder="请选择种类">
+            <el-option v-for="(type, i) in typeList" :key="i" :label="type.name" :value="type.typeId" />
+          </el-select>
+        </el-form-item>
       </el-row>
       <el-form-item label="图片" prop="cover">
         <el-upload
@@ -48,24 +49,30 @@
 <script>
 import { getInfoById, update, add } from '@/api/dishes'
 import { getToken } from '../../utils/auth'
+import { getTypeList } from '../../api/type'
+import { getNameList } from '../../api/window'
 
 export default {
-  data() {
+  data: function() {
     return {
       data: {
         cover: '',
         id: 0,
         support: 0,
         name: '',
-        typeId: 0,
-        windowId: 0
+        typeId: '',
+        windowId: ''
       },
+      canteenId: 1,
+      floor: 1,
       pictureVisible: false,
       dialogPicture: '',
+      typeList: [],
+      windowList: [],
       headers: { 'authToken': getToken() },
       // 数据校验：判空、正则匹配。
       formRules: {
-        name: [{ required: true, trigger: 'blur', message: '菜式名不能为空' }],
+        name: [{ required: true, trigger: 'blur', message: '菜式名不能为空' }]
       }
     }
   },
@@ -73,16 +80,33 @@ export default {
     const params = this.$route.params
     this.data.id = params.id
     this.loadInfo()
+    this.loadWindowList()
+    this.loadTypeList()
   },
   methods: {
+    loadTypeList() {
+      getTypeList().then(res => {
+        this.typeList = res.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     loadInfo() {
       if (this.data.id > 0) {
         getInfoById(this.data.id).then(res => {
           this.data = res.data
         }).catch(err => {
-          this.$message.error('获取管理员信息失败:' + err)
+          this.$message.error('获取信息失败:' + err)
         })
       }
+    },
+    loadWindowList() {
+      getNameList().then(res => {
+        this.windowList = res.data
+        console.log(this.windowList)
+      }).catch(err => {
+        console.log(err)
+      })
     },
     onSubmit() {
       this.$refs.userForm.validate((valid) => {

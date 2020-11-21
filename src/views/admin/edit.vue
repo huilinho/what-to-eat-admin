@@ -15,6 +15,7 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <div v-show="this.data.id>0?false:true">
       <el-row>
         <el-col :span="8">
           <el-form-item label="密码" prop="password">
@@ -22,6 +23,7 @@
           </el-form-item>
         </el-col>
       </el-row>
+      </div>
       <el-row>
         <el-col :span="8">
           <el-form-item label="昵称" prop="nickname">
@@ -71,13 +73,9 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      const regex = /^[A-Za-z0-9$@#%^&]{6,20}$/g
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
-        if (!regex.test(value)) {
-          callback(new Error('密码只能由字母、数字、$、@、#、%、^、&构成,最少6位最高20位！'))
-        }
         callback()
       }
     }

@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { getInfoById, update, add } from '@/api/window'
+import {getById, update, add } from '@/api/window'
 import { getToken } from '../../utils/auth';
 
 export default {
@@ -92,7 +92,7 @@ export default {
   methods: {
     loadInfo() {
       if (this.data.id > 0) {
-        getInfoById(this.data.id).then(res => {
+          getById(this.data.id).then(res => {
           this.data = res.data
         }).catch(err => {
           this.$message.error('获取管理员信息失败:' + err)

@@ -23,14 +23,14 @@
     >
       <el-table-column align="center" label="ID" width="95" prop="id" />
       <el-table-column align="center" label="菜式名称" width="95" prop="name" />
-      <el-table-column align="center" label="窗口名" prop="windowId" />
-      <el-table-column align="center" label="种类" prop="typeId" />
+      <el-table-column align="center" label="窗口" prop="windowId" :formatter="windowFormatter" />
+      <el-table-column align="center" label="种类" prop="typeId" :formatter="typeFormatter" />
       <el-table-column align="center" label="图片" width="120">
         <template slot-scope="scope">
           <img :src="scope.row.cover" min-width="70" height="70" style="padding:5px">
         </template>
       </el-table-column>
-      <el-table-column align="center" label="获赞数" prop="support"  />
+      <el-table-column align="center" label="获赞数" prop="support" />
       <el-table-column align="center" label="创建时间" prop="createTime" />
       <el-table-column align="center" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
@@ -56,6 +56,9 @@
 
 <script>
 import { del, getList } from '@/api/dishes'
+import { getTypeList } from '../../api/type'
+import { getNameList } from '../../api/window'
+
 export default {
   filters: {
     statusFilter(status) {
@@ -78,13 +81,32 @@ export default {
         order: 'id desc',
         keywords: ''
       },
-      keywords: ''
+      keywords: '',
+      typeList: [],
+      windowList: []
     }
   },
   created() {
     this.loadList()
+    this.loadTypeList()
+    this.loadWindow()
   },
   methods: {
+    loadWindow() {
+      getNameList().then(res => {
+        this.windowList = res.data
+        console.log(this.windowList)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    loadTypeList() {
+      getTypeList().then(res => {
+        this.typeList = res.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     loadList() {
       this.loading = true
       getList(this.pagination).then(res => {
@@ -112,6 +134,20 @@ export default {
       }).catch(err => {
         this.$message.error('删除失败:' + err)
       })
+    },
+    typeFormatter(value) {
+      for (const index in this.typeList) {
+        if (this.typeList[index].typeId === value.typeId) {
+          return this.typeList[index].name
+        }
+      }
+    },
+    windowFormatter(value) {
+      for (const index in this.windowList) {
+        if (this.windowList[index].windowId === value.windowId) {
+          return this.windowList[index].name
+        }
+      }
     }
   }
 }
