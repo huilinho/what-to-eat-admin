@@ -25,7 +25,7 @@
       </el-row>
       <el-form-item label="图片" prop="cover">
         <el-upload
-          action="http://localhost:8527/admapi/upload"
+          action="/admapi/upload"
           list-type="picture-card"
           :headers="headers"
           :on-preview="picturePreview"

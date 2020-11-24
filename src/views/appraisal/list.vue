@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row class="padding">
       <el-col :span="5">
-        <el-input v-model="pagination.keywords" placeholder="请输入菜式名称" />
+        <el-input v-model="pagination.keywords" placeholder="请输入用户名称" />
       </el-col>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="1">
@@ -18,10 +18,10 @@
       highlight-current-row
     >
       <el-table-column align="center" label="ID" width="95" prop="id" />
-      <el-table-column align="center" label="用户名" width="95" prop="userId" />
-      <el-table-column align="center" label="菜式" prop="dishesId" />
+      <el-table-column align="center" label="用户名" width="95" prop="userId" :formatter="UserFormatter" />
+      <el-table-column align="center" label="菜式" prop="dishesId" :formatter="DishFormatter" />
       <el-table-column align="center" label="评价内容" prop="appraisal" />
-      <el-table-column align="center" label="创建时间" prop="createTime"/>
+      <el-table-column align="center" label="创建时间" prop="createTime" />
       <el-table-column align="center" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="del(scope.$index)">删除</el-button>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { del, getList } from '@/api/appraisal'
+import { del, getList, getUser, getDish } from '@/api/appraisal'
 import DateUtil from '../../utils/DateUtil'
 
 export default {
@@ -69,11 +69,14 @@ export default {
         order: 'id desc',
         keywords: ''
       },
-      keywords: ''
+      userList: [],
+      dishList: []
     }
   },
   created() {
     this.loadList()
+    this.loadDish()
+    this.loadUser()
   },
   methods: {
     loadList() {
@@ -88,6 +91,22 @@ export default {
         this.loading = false
       })
     },
+    loadUser() {
+      getUser().then(res => {
+        console.log(res.data)
+        this.userList = res.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    loadDish() {
+      getDish().then(res => {
+        console.log(res.data)
+        this.dishList = res.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     del(index) {
       const data = this.list[index]
       del(data.id).then(res => {
@@ -99,6 +118,20 @@ export default {
     },
     timeFormatter(row) {
       return DateUtil.format(row.createTime)
+    },
+    UserFormatter(value) {
+      for (const index in this.userList) {
+        if (this.userList[index].id === value.userId) {
+          return this.userList[index].username
+        }
+      }
+    },
+    DishFormatter(value) {
+      for (const index in this.dishList) {
+        if (this.dishList[index].id === value.dishesId) {
+          return this.dishList[index].name
+        }
+      }
     }
   }
 }

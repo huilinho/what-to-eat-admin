@@ -10,7 +10,7 @@
       </el-col>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="1">
-        <el-button type="success" @click="add">添加菜式</el-button>
+        <el-button type="success" @click="add">添加窗口</el-button>
       </el-col>
     </el-row>
     <el-table

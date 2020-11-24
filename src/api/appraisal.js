@@ -6,6 +6,18 @@ export function getInfoById(id) {
     method: 'get'
   })
 }
+export function getDish() {
+  return request({
+    url: '/dishes/dishesList',
+    method: 'get'
+  })
+}
+export function getUser() {
+  return request({
+    url: '/dishes/userList',
+    method: 'get'
+  })
+}
 export function getList(params) {
   return request({
     url: '/appraisal/list',
